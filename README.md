@@ -1,63 +1,65 @@
-# 🎬 yt2drive
+# yt2drive
 
-Tải video YouTube lưu vào Google Drive qua Google Colab. Không cần cài đặt, chạy trên trình duyệt.
+Download YouTube videos directly into Google Drive using Google Colab. No local installation required, runs directly in your browser.
 
 ---
 
-## ⚡ Cách hoạt động
+## How It Works
 
+```text
+YouTube Link -> Colab Download (~1Gbps) -> Save to Google Drive
 ```
-Link YouTube → Colab tải (~1Gbps) → Lưu vào Drive
-```
 
-Máy tính bạn không cần làm gì, có thể tắt màn hình.
+Your computer does not need to perform heavy processing; you can close the browser tab once execution begins.
 
 ---
 
-## 🚀 Sử dụng
+## Usage Instructions
 
-1. Upload `YouTube_to_Google_Drive.ipynb` lên [colab.research.google.com](https://colab.research.google.com)
-2. **Cell 1** — Cài thư viện
-3. **Cell 2** — Kết nối Google Drive (đăng nhập Google)
-4. **Cell 3** — Điền URL + cấu hình
-5. **Cell 4** — Chạy và chờ
+1. Upload `YouTube_to_Google_Drive.ipynb` to [colab.research.google.com](https://colab.research.google.com)
+2. **Cell 1** — Install required libraries
+3. **Cell 2** — Mount Google Drive (sign in with your Google account)
+4. **Cell 3** — Provide URL and configuration settings
+5. **Cell 4** — Run cell and wait for execution to complete
 
 ---
 
-## ⚙️ Cấu hình (Cell 3)
+## Configuration (Cell 3)
 
 ```python
 YOUTUBE_URL = 'https://youtube.com/watch?v=...'
-DRIVE_FOLDER = 'YouTube Downloads'   # Thư mục lưu trong Drive
-QUALITY = 'best'   # best | 1080 | 720 | 480 | audio_only
-DOWNLOAD_PLAYLIST = False            # True = tải cả playlist
+DRIVE_FOLDER = 'YouTube Downloads'   # Destination folder in Google Drive
+QUALITY = 'best'                     # options: best | 1080 | 720 | 480 | audio_only
+DOWNLOAD_PLAYLIST = False            # True to download entire playlist
 ```
 
-| Quality | Kết quả |
+| Quality Option | Resolution / Output |
 |---|---|
-| `best` | Chất lượng cao nhất |
-| `1080` / `720` / `480` | Theo độ phân giải |
-| `audio_only` | MP3 |
+| `best` | Highest available quality |
+| `1080` / `720` / `480` | Target video resolution |
+| `audio_only` | Audio extraction (MP3) |
 
 ---
 
-## 💡 Ví dụ
+## Examples
 
 ```python
-# Bài giảng 720p
+# HD 720p Video
 QUALITY = '720'
-DRIVE_FOLDER = 'Bài giảng/Python'
+DRIVE_FOLDER = 'Lectures/Python'
 
-# Tải nhạc MP3
+# Audio Extraction (MP3)
 QUALITY = 'audio_only'
 DRIVE_FOLDER = 'Music'
 
-# Cả playlist
+# Full Playlist Download
 DOWNLOAD_PLAYLIST = True
-DRIVE_FOLDER = 'Khoá học/Tên khoá'
+DRIVE_FOLDER = 'Courses/Course Name'
 ```
 
-**Nhiều video cùng lúc** → Dùng **Cell Bonus** trong notebook:
+### Batch Processing Multiple Videos
+
+Use the **Bonus Cell** inside the notebook:
 
 ```python
 URL_LIST = [
@@ -69,41 +71,44 @@ DRIVE_FOLDER_BATCH = 'YouTube Downloads/Batch'
 QUALITY_BATCH = '720'
 ```
 
-Tool sẽ tải tuần tự từng video và lưu vào cùng một thư mục Drive.
+The script processes and downloads videos sequentially into the specified Google Drive folder.
 
 ---
 
-## 💰 Chi phí
+## Pricing & Requirements
 
-| | Giá |
+| Component | Cost / Limit |
 |---|---|
-| Google Colab | Miễn phí (~12h/phiên) |
-| Google Drive | Miễn phí đến 15 GB |
+| Google Colab | Free (~12h runtime per session) |
+| Google Drive | Free up to 15 GB storage |
 
-> 1 video HD ~1 giờ ≈ 1–3 GB.
+> Note: A 1-hour 1080p HD video typically requires 1–3 GB of storage.
 
 ---
 
-## ❓ FAQ
+## Frequently Asked Questions (FAQ)
 
-**Lỗi không tải được?** → Video bị giới hạn vùng. Thử video khác.
+**Download failed?**
+Check if the video is age-restricted or geo-blocked in your region.
 
-**Không thấy file trong Drive?** → Kiểm tra lại tên `DRIVE_FOLDER`.
+**File not appearing in Google Drive?**
+Verify the `DRIVE_FOLDER` directory path in your configuration.
 
-**Colab tự ngắt khi tải dài?** → F12 → Console → dán:
+**Colab disconnects during long downloads?**
+Open browser Developer Console (F12 -> Console) and run:
 ```javascript
 setInterval(() => document.querySelector('colab-toolbar-button#connect').click(), 60000)
 ```
 
 ---
 
-## 📦 Công nghệ
+## Technical Stack
 
-- [yt-dlp](https://github.com/yt-dlp/yt-dlp) — tải video
-- Google Colab + Drive — chạy và lưu trữ
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) — High-performance YouTube downloader
+- Google Colab & Google Drive — Cloud execution and storage environment
 
 ---
 
-## 📄 License
+## License
 
-MIT — **yt2drive**
+MIT License — **yt2drive**
